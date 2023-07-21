@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => HomeScreeen());
         }
       },
-      home: PreferenceScreen(),
-      // home: BottomNavig(),
+      //home: PreferenceScreen(),
+      home: BottomNavig(),
       //home: PlanScreen(),
     );
   }

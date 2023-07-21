@@ -4,8 +4,9 @@ class RoundedButtonLoginPage extends StatelessWidget {
   const RoundedButtonLoginPage({
     Key? key,
     required this.buttonName,
+    required this.onPressed,
   }) : super(key: key);
-
+  final void Function() onPressed;
   final String buttonName;
 
   @override
@@ -19,7 +20,7 @@ class RoundedButtonLoginPage extends StatelessWidget {
         color: Color(0xff38D0BF),
       ),
       child: TextButton(
-        onPressed: () {},
+        onPressed: onPressed,
         child: Text(
           buttonName,
           style: TextStyle(fontSize: 22, color: Colors.white, height: 1.5),

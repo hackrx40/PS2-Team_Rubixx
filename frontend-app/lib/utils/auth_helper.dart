@@ -6,22 +6,22 @@ import '../model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthHelper {
-  Future<bool> register(UserModel userModel) async {
+  static Future<bool> register(UserModel userModel, String password) async {
     var res = await http.post(
         Uri.parse('https://11d3-103-68-38-66.ngrok-free.app/api/user/register'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          "email": "viraj.ag007+2@gmail.com",
-          "password": "123456",
-          "name": "Viraj Agarwal",
+          "email": userModel.email,
+          "password": password,
+          "name": userModel.name,
           "role": "patient",
-          "phone": "7979783662"
+          "phone": userModel.phone
         }));
     var data = jsonDecode(res.body);
     return data['success'];
   }
 
-  login(String userId, String password) async {
+  static login(String userId, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var fcm = prefs.get('fcm_token');
     var res = await http.post(
