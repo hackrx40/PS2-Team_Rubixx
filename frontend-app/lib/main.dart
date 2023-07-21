@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         }
       },
       // home: HomeScreeen(),
-      home: QuizScreen(),
+      home: BottomNavig(),
       //home: PlanScreen(),
     );
   }
