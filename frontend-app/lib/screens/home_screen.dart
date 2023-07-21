@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mediserv/components/AppBarr.dart';
 import 'package:mediserv/components/article_container.dart';
@@ -6,6 +8,7 @@ import 'package:mediserv/components/heading_subheading.dart';
 import 'package:mediserv/components/homepage_smalbox.dart';
 import 'package:mediserv/components/search_bar.dart';
 import 'package:mediserv/screens/chatbot_screen.dart';
+import 'package:mediserv/utils/notif_content.dart';
 import 'package:mediserv/utils/notification_controller.dart';
 import 'package:mediserv/utils/usage_stats.dart';
 import 'package:usage_stats/usage_stats.dart';
@@ -34,7 +37,12 @@ class _HomeScreeenState extends State<HomeScreeen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          NotificationController.createNewNotification();
+          var body = await NotifContent.getNotification(10);
+          var data = jsonDecode(body);
+          print(data);
+          await NotificationController.createNewCustNotification(
+              data['headline'], data['article']);
+          // NotificationController.createNewNotification();
           // await UsageStatistics.getUsage();
           //await UsageStatistics.getMostActiveHours();
         },
