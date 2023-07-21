@@ -13,6 +13,8 @@ Official Entry of Team Rubixx team to HackRx 4.0 <br>
 
 ## Problem Statement 🚧
 
+## About our project 💥
+
 ## Collaborators 🤖
 Only developers.
 | Name      | GitHub Profile     |
