@@ -5,6 +5,7 @@ import 'package:mediserv/components/bottom_home_page.dart';
 import 'package:mediserv/components/heading_subheading.dart';
 import 'package:mediserv/components/homepage_smalbox.dart';
 import 'package:mediserv/components/search_bar.dart';
+import 'package:mediserv/screens/chatbot_screen.dart';
 import 'package:mediserv/utils/notification_controller.dart';
 import 'package:mediserv/utils/usage_stats.dart';
 import 'package:usage_stats/usage_stats.dart';
@@ -21,6 +22,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     UsageStatistics.getUsage();
     NotificationController.initializeContext(context);
     NotificationController.startListeningNotificationEvents();
