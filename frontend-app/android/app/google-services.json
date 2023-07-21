@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "436162562134",
+    "project_id": "mediserv-3edab",
+    "storage_bucket": "mediserv-3edab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436162562134:android:026b53d95699f691f9d3f7",
+        "android_client_info": {
+          "package_name": "com.rubixx.mediserv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436162562134-6bfpr6suieiel27e5ugdssqpj3khl5nt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAfWzEIq2UdhU8DKTw4hQvNr_WN5kDdE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "436162562134-6bfpr6suieiel27e5ugdssqpj3khl5nt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
