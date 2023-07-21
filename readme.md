@@ -1,4 +1,4 @@
-#Team_Rubixx
+# Team Rubixx for HackRx 4.0 Bajaj Finserv ✨🚀
 
 ## Collaborators 🤖
 Only developers.
