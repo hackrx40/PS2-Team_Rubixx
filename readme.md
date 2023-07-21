@@ -7,7 +7,11 @@ Official Entry of Team Rubixx team to HackRx 4.0 <br>
 ![Issues](https://img.shields.io/badge/issues-0-blue)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) 
 
+## Links to Academic Grand Challenge ⚓
+![image](https://github.com/hackrx40/PS2-Team_Rubixx/assets/75165587/ae4f870b-85a6-4f1d-894c-9bcbbf2486a6)
+- [Official Website](https://hackrx.in/)
 
+  
 ## Collaborators 🤖
 Only developers.
 | Name      | GitHub Profile     |
