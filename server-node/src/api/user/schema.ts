@@ -11,6 +11,7 @@ const userSchema = {
   phone: yup.string().length(10).required().trim(),
   name: yup.string().required().trim(),
   interestes: yup.array(),
+  documents: yup.array(),
 };
 
 export const loginUserSchema = new yup.ObjectSchema(userLogin);
