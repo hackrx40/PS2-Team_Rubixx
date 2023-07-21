@@ -131,6 +131,26 @@ def compare(current,past):
         return -1
     return 0
 
+def Notify(old,new,trait):
+   
+    try :
+        global tokenizer_art, model_art
+        inputs = tokenizer_art(userquery, return_tensors="pt")
+        set_seed(42)
+        with torch.no_grad():
+            beam_output = model_art.generate(**inputs,
+                                        min_length=50,
+                                        max_length=300,
+                                        num_beams=5,
+                                        early_stopping=True
+                                        )
+        response = tokenizer_art.decode(beam_output[0], skip_special_tokens=True)
+        return { "headline":headline,"article":response }
+    except :
+        return {"headline":headline,"article" : ""}
+
+
+
 @app.get('/')
 async def read_root():
     return {"response":"hello world"}
