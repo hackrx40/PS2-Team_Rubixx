@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-# from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+from typing import Optional
+
 
 import torch
 from transformers import BioGptTokenizer, BioGptForCausalLM, set_seed
@@ -13,8 +14,8 @@ app = FastAPI()
 
 class art_item(BaseModel):
     keyword:str
-    min_len:int
-    max_len:int
+    min_len : Optional[int] = 150
+    max_len : Optional[int] = 1024
     
 
 def generateNotificationContent(keyword,min_len,max_len):
