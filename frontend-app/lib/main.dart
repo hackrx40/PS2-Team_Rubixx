@@ -3,6 +3,7 @@ import 'package:mediserv/screens/book_doctor.dart';
 import 'package:mediserv/screens/bottom_nav.dart';
 import 'package:mediserv/screens/home_screen.dart';
 import 'package:mediserv/screens/plan_screen.dart';
+import 'package:mediserv/screens/preference_screen.dart';
 import 'package:mediserv/screens/quiz/quiz.dart';
 
 import 'package:mediserv/utils/notification_controller.dart';
@@ -48,8 +49,8 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => HomeScreeen());
         }
       },
-      // home: HomeScreeen(),
-      home: BottomNavig(),
+      home: PreferenceScreen(),
+      // home: BottomNavig(),
       //home: PlanScreen(),
     );
   }

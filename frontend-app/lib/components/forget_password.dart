@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:mediserv/components/rounded_button_login.dart';
 import 'package:mediserv/components/text_input.dart';
 
@@ -49,7 +49,7 @@ class ForgotPassword extends StatelessWidget {
                       height: 20,
                     ),
                     TextInputField(
-                      icon: FontAwesomeIcons.envelope,
+                      icon: FontAwesome.envelope,
                       hint: 'Email',
                       inputType: TextInputType.emailAddress,
                       inputAction: TextInputAction.done,
