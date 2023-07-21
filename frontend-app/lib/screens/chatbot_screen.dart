@@ -34,6 +34,8 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     return Dialog(
       elevation: 3,
       child: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+        padding: EdgeInsets.all(10),
         width: 0.949 * width,
         height: 500,
         child: Stack(
@@ -43,13 +45,41 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
               bottom: 50,
               left: 0,
               right: 0,
-              child: Container(),
+              child: Container(
+                child: ListView.builder(
+                    itemCount: chats.length,
+                    itemBuilder: (context, index) {
+                      return Flexible(
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: chats[index].isChatFromBot!
+                              ? Color(0xFFEDEDED)
+                              : Colors.white,
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: AssetImage(
+                                  'assets/chatbot.png',
+                                ),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Expanded(child: Text(chats[index].text))
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+              ),
             ),
             Positioned(
                 bottom: 5,
                 left: 0,
                 right: 0,
                 child: Container(
+                  width: width,
+                  height: 50,
                   margin: EdgeInsets.all(5),
                   child: TextField(
                     controller: _textController,
@@ -58,15 +88,19 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                       suffixIcon: IconButton(
                         icon: Icon(Icons.send),
                         onPressed: () {
-                          setState(() async {
+                          setState(() {
                             chats.add(ChatbotModel(
                                 text: _textController.text,
+                                isChatFromBot: false,
                                 dateTime: DateTime.now()));
-                            var resp = await ChatBotHelper.askQuestion(
-                                _textController.text);
-                            chats.add(ChatbotModel(
-                                text: resp!, dateTime: DateTime.now()));
-                            _textController.clear();
+                            ChatBotHelper.askQuestion(_textController.text)
+                                .then((value) {
+                              chats.add(ChatbotModel(
+                                  text: value!,
+                                  dateTime: DateTime.now(),
+                                  isChatFromBot: true));
+                              _textController.clear();
+                            });
                           });
                         },
                       ),
