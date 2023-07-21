@@ -12,7 +12,7 @@ const getAllArticle = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
-// get single
+
 const getArticle = async (req, res) => {
   const { id } = req.params;
   const Article = await Article.findById(id);
