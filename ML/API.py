@@ -133,7 +133,14 @@ def compare(current,past):
 
 def Notify(old,new,trait):
     headline = random.choice(list(model_intro.values()))
-
+    change = compare(old,new)
+    if change >0:
+        # choose random intro
+        userquery = random.choice((change_bh['positive'])) + "{}".format(trait)
+        # model.gen(userquery,)
+    elif change < 0:
+            userquery = random.choice(change_bh['negative']) + "{}".format(trait)
+    print(userquery)
     try :
         global tokenizer_art, model_art
         inputs = tokenizer_art(userquery, return_tensors="pt")
