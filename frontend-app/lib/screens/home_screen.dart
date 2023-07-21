@@ -44,8 +44,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
       body: SingleChildScrollView(
         child: Container(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SearchBarr(
                   searchText: "search for doctors,hospitals, symptoms.."),
@@ -53,8 +52,9 @@ class _HomeScreeenState extends State<HomeScreeen> {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 15),
+                padding: const EdgeInsets.only(left: 0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
                   children: [
@@ -82,9 +82,13 @@ class _HomeScreeenState extends State<HomeScreeen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15),
-                child: HeadingSubHead(
-                  text1: "Curated Article",
-                  text2: "Articles based on your interests",
+                child: Column(
+                  children: [
+                    HeadingSubHead(
+                      text1: "Curated Article",
+                      text2: "Articles based on your interests",
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
