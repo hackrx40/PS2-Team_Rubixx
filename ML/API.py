@@ -38,6 +38,22 @@ def contentGenerate(query,min_len,max_len):
     except :
         return {"article" : ""}
 
+
+def compare(current,past):
+    mapsevere = {
+        "very high" :3,
+        "high":2,
+        "border":1,
+        "low":0
+    }
+    current = mapsevere[current]
+    past = mapsevere[past]
+    if current < past :
+        return 1
+    elif current > past :
+        return -1
+    return 0
+
 @app.get('/')
 async def read_root():
     return {"response":"hello world"}
