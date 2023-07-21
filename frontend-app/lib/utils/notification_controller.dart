@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 
@@ -41,6 +42,17 @@ class NotificationController extends ChangeNotifier {
               playSound: true,
               onlyAlertOnce: true,
               groupAlertBehavior: GroupAlertBehavior.Children,
+              importance: NotificationImportance.High,
+              defaultPrivacy: NotificationPrivacy.Public,
+              defaultColor: Colors.deepPurple,
+              ledColor: Colors.deepPurple),
+          NotificationChannel(
+              channelKey: 'article',
+              channelName: 'article',
+              channelDescription: 'Articles in notification',
+              playSound: true,
+              onlyAlertOnce: true,
+              groupAlertBehavior: GroupAlertBehavior.All,
               importance: NotificationImportance.High,
               defaultPrivacy: NotificationPrivacy.Public,
               defaultColor: Colors.deepPurple,
@@ -106,20 +118,47 @@ class NotificationController extends ChangeNotifier {
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
     print(receivedAction);
-    if (receivedAction.actionType == ActionType.SilentAction ||
-        receivedAction.actionType == ActionType.SilentBackgroundAction) {
-      // For background actions, you must hold the execution until the end
-      print(
-          'Message sent via notification input: "${receivedAction.buttonKeyInput}"');
-      // await executeLongTaskInBackground();
-    } else {
-      try {
-        await Navigator.pushNamed(context!, 'plan');
-        print("Navigation successful");
-      } catch (e, stackTrace) {
-        print("Navigation error: $e");
-      }
-      print("done");
+    switch (receivedAction.channelKey) {
+      case 'alerts':
+        {
+          if (receivedAction.actionType == ActionType.SilentAction ||
+              receivedAction.actionType == ActionType.SilentBackgroundAction) {
+            // For background actions, you must hold the execution until the end
+            print(
+                'Message sent via notification input: "${receivedAction.buttonKeyInput}"');
+            // await executeLongTaskInBackground();
+          } else {
+            try {
+              await Navigator.pushNamed(context!, 'plan');
+              print("Navigation successful");
+            } catch (e, stackTrace) {
+              print("Navigation error: $e");
+            }
+            print("done");
+          }
+          break;
+        }
+      case 'article':
+        {
+          if (receivedAction.actionType == ActionType.SilentAction ||
+              receivedAction.actionType == ActionType.SilentBackgroundAction) {
+            // For background actions, you must hold the execution until the end
+            print(
+                'Message sent via notification input: "${receivedAction.buttonKeyInput}"');
+            // await executeLongTaskInBackground();
+          } else {
+            try {
+              Fluttertoast.showToast(
+                  msg: 'Notification Clicked', backgroundColor: Colors.blue);
+              //await Navigator.pushNamed(context!, 'plan');
+              print("Navigation successful");
+            } catch (e, stackTrace) {
+              print("Navigation error: $e");
+            }
+            print("done");
+          }
+          break;
+        }
     }
   }
 
@@ -158,6 +197,8 @@ class NotificationController extends ChangeNotifier {
         textColor: Colors.white,
         fontSize: 16);
     debugPrint('Firebase Token:"$token"');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('fcm_token', token);
 
     _instance._firebaseToken = token;
     _instance.notifyListeners();
@@ -317,6 +358,52 @@ class NotificationController extends ChangeNotifier {
               label: 'Dismiss',
               actionType: ActionType.DismissAction,
               isDangerousOption: true)
+        ]);
+  }
+
+  static Future<void> createNewCustNotification(
+      String title, String body) async {
+    bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+    if (!isAllowed) isAllowed = await displayNotificationRationale();
+    if (!isAllowed) return;
+
+    await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: -1, // -1 is replaced by a random number
+            channelKey: 'article',
+            autoDismissible: false,
+            title: '<b>$title</b>',
+            //locked: true,
+            //  criticalAlert: true,
+            color: Colors.redAccent,
+            body: body,
+            //   bigPicture: 'https://storage.googleapis.com/cms-storage-bucket/d406c736e7c4c57f5f61.png',
+            //  largeIcon: 'https://storage.googleapis.com/cms-storage-bucket/0dbfcc7a59cd1cf16282.png',
+            //'asset://assets/images/balloons-in-sky.jpg',
+            notificationLayout: NotificationLayout.Default,
+            payload: {'notificationId': '1234567890'}),
+        //  schedule: NotificationCalendar(hour: 8, minute: 0, repeats: true),
+        actionButtons: [
+          // NotificationActionButton(
+          //     showInCompactView: true,
+          //     color: Colors.white,
+          //     key: 'REDIRECT',
+          //     label: 'Redirect',
+          //     autoDismissible: false),
+          // NotificationActionButton(
+          //     color: Colors.white,
+          //     showInCompactView: true,
+          //     key: 'REPLY',
+          //     label: 'Reply Message',
+          //     requireInputText: true,
+          //     actionType: ActionType.SilentAction),
+          // NotificationActionButton(
+          //     color: Colors.white,
+          //     showInCompactView: true,
+          //     key: 'DISMISS',
+          //     label: 'Dismiss',
+          //     actionType: ActionType.DismissAction,
+          //     isDangerousOption: true)
         ]);
   }
 }
