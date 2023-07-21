@@ -5,12 +5,20 @@ from typing import Optional
 import random
 import torch
 from transformers import BioGptTokenizer, BioGptForCausalLM, set_seed
+from fastapi.middleware.cors import CORSMiddleware
 
 
 tokenizer_art = BioGptTokenizer.from_pretrained("microsoft/biogpt")
 model_art = BioGptForCausalLM.from_pretrained("microsoft/biogpt")
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins='*',
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 positive = ['The Advantages of Possessing good level ',
 'Discover the Benefits of Having borderline ',
@@ -53,16 +61,16 @@ negative=['Navigating the Complications of Living with Diabetes'
 
 model_intro = {
     "Intro 1":
-"Beep! Your health comes first. Stay informed and cared for with our medical phone notifications."
+"Beep! Your health comes first. Stay informed."
 
 ,"Intro 2":
-"Buzz, buzz! Our medical phone notifications are your personalized health assistants, always by your side."
+"Buzz, buzz! your personalized health assistants, always by your side."
 
 ,"Intro 3":
-"Stay on top of your medical needs with the gentle reminders of our health-focused phone notifications."
+"Stay on top of your medical needs with the gentle reminders "
 
 ,"Intro 4":
-"Be alerted to important health updates with the reassuring tones of our medical phone notifications."
+"Be alerted to important health updates "
 
 ,"Intro 5":
 "Your well-being matters. Let our medical phone notifications guide you towards a healthier tomorrow."
@@ -71,13 +79,10 @@ model_intro = {
 "Experience the power of knowledge with our medical phone notifications, tailored to your health goals."
 
 ,"Intro 7":
-"Stay connected to your healthcare journey. Embrace the support of our medical phone notifications."
+"Stay connected to your healthcare journey."
 
 ,"Intro 8":
-"From medication reminders to vital health insights, our medical phone notifications have you covered."
-
-,"Intro 9":
-"Unlock a world of better health with our intelligent medical phone notifications at your fingertips."
+"From medication reminders to vital health insights"
 
 ,"Intro 10":
 "Your health, our priority. Trust our medical phone notifications to keep you in the pink of health."
@@ -97,7 +102,15 @@ class not_item(BaseModel):
     current : str
     old:str
     trait:str
-
+class recommend_item(BaseModel):
+    # input_symptoms:str 
+    # input_disease:str 
+    # input_doctor:str 
+    # input_department:str 
+    # input_severity:str
+    # input_medical_test:str
+    patient_id :int
+    
 def contentGenerate(query,min_len,max_len):
     try :
         global tokenizer_art, model_art
@@ -134,7 +147,7 @@ def compare(current,past):
 def Notify(old,new,trait):
     headline = random.choice(list(model_intro.values()))
     change = compare(old,new)
-    if change >0:
+    if change >=0:
         # choose random intro
         userquery = random.choice((change_bh['positive'])) + "{}".format(trait)
         # model.gen(userquery,)
@@ -158,6 +171,9 @@ def Notify(old,new,trait):
         return {"headline":headline,"article" : ""}
 
 
+def Recommend(patient_id):
+    return {"response":"OK"}
+
 
 @app.get('/')
 async def read_root():
@@ -172,3 +188,7 @@ async def content(item:art_item):
 @app.post("/notification")
 async def notify(item:not_item):
     return Notify(item.old,item.current,item.trait)
+
+@app.post("/recommend/")
+async def recommend(item:recommend_item):
+    return Recommend(item.patient_id)
