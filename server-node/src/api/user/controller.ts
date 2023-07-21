@@ -94,16 +94,18 @@ export const updateUser = async (
 ) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
-    console.log({ token });
-
     const { user_id } = await verifyJwt(token!);
 
-    await (await database())
-      .collection("users")
-      .findOneAndUpdate(
-        { user_id },
-        { $set: { interests: req.body.interests } },
-      );
+    const updated: { interests?: any; documents?: any } = {};
+    if (req.body.interests) updated.interests = req.body.interests;
+    if (req.body.documents) updated.documents = req.body.documents;
+
+    await (await database()).collection("users").findOneAndUpdate(
+      { user_id },
+      {
+        $set: updated,
+      },
+    );
 
     return true;
   } catch (error) {
