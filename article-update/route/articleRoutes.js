@@ -31,4 +31,10 @@ routers.patch("/:id", (req, res) => {
   });
 });
 
+routers.get("/generate", (req, res) => {
+  res.json({
+    message: "generate a article",
+  });
+});
+
 module.exports = routers;

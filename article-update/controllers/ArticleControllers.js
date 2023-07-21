@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const { findByIdAndDelete, update } = require("../models/Article");
 const Article = require("../models/Article");
-
+const generateArticle = require("./generateArticle");
 // get all
 const getAllArticle = async (req, res) => {
   try {
@@ -24,8 +24,13 @@ const getArticle = async (req, res) => {
 };
 
 // post
+
+const generateArticle = async (req, res) => {
+  generateArticle();
+};
+
 const createArticle = async (req, res) => {
-  const { _id, title, reps, load } = req.body;
+  const { _id, title } = req.body;
   try {
     const Article = await Article.create({
       _id,
@@ -72,4 +77,5 @@ module.exports = {
   getArticle,
   deleteArticle,
   updateArticle,
+  generateArticle,
 };
