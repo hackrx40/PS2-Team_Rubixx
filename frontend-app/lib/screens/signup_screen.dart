@@ -5,14 +5,23 @@ import 'package:mediserv/components/password_input.dart';
 import 'package:mediserv/components/rounded_button.dart';
 import 'package:mediserv/components/rounded_button_login.dart';
 import 'package:mediserv/components/text_input.dart';
+import 'package:mediserv/model/user_model.dart';
+import 'package:mediserv/utils/auth_helper.dart';
+
+import 'login_screen.dart';
 
 class CreateNewAccount extends StatelessWidget {
+  final nameController = TextEditingController();
+  final userIdController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
         Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Color(0xffAAE7E7),
           body: SingleChildScrollView(
             child: Column(
@@ -65,44 +74,69 @@ class CreateNewAccount extends StatelessWidget {
                 Column(
                   children: [
                     TextInputField(
+                      controller: nameController,
                       icon: FontAwesome.user,
                       hint: 'User Name',
                       inputType: TextInputType.name,
                       inputAction: TextInputAction.next,
                     ),
                     TextInputField(
+                      controller: userIdController,
                       icon: FontAwesome.envelope,
                       hint: 'Email',
                       inputType: TextInputType.emailAddress,
                       inputAction: TextInputAction.next,
                     ),
-                    PasswordInput(
-                      icon: FontAwesome.lock,
-                      hint: 'Password',
+                    TextInputField(
+                      controller: phoneController,
+                      icon: Icons.phone,
+                      hint: 'Phone No',
+                      inputType: TextInputType.number,
                       inputAction: TextInputAction.next,
                     ),
                     PasswordInput(
+                      controller: passController,
                       icon: FontAwesome.lock,
-                      hint: 'Confirm Password',
+                      hint: 'Password',
                       inputAction: TextInputAction.done,
                     ),
                     SizedBox(
                       height: 25,
                     ),
-                    RoundedButtonLoginPage(buttonName: 'Register'),
+                    RoundedButtonLoginPage(
+                      buttonName: 'Register',
+                      onPressed: () async {
+                        await AuthHelper.register(
+                            UserModel(
+                                email: userIdController.text,
+                                name: nameController.text,
+                                phone: phoneController.text),
+                            passController.text);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+                      },
+                    ),
                     SizedBox(
                       height: 30,
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text(
-                        'Already have an account?',
-                        style: TextStyle(
-                            fontSize: 22, color: Colors.white, height: 1.5),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        },
+                        child: Text(
+                          'Already have an account?',
+                          style: TextStyle(
+                              fontSize: 22, color: Colors.white, height: 1.5),
+                        ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/');
-                        },
+                        onTap: () async {},
                         child: Text(
                           'Login',
                           style: TextStyle(

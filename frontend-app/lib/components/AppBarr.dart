@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mediserv/screens/login_screen.dart';
 
 class AppBarr extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor = Color(0xFF64CCC5);
@@ -20,37 +21,30 @@ class AppBarr extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       elevation: 0,
       actions: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color(0xFFE8E8E8),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/coin.png',
-                      height: 36,
-                      width: 36,
-                    ),
-                    Text(
-                      '239 points',
-                      style: GoogleFonts.dmSans(
-                          fontSize: 15, color: Color(0xFF1E1E1E)),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    )
-                  ],
-                ),
-              ),
-            )
-          ],
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoginScreen()));
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                  margin: EdgeInsets.only(right: 10),
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.green.shade100,
+                  ),
+                  child: Text(
+                    'Login/Signup',
+                    style: GoogleFonts.dmSans(
+                        backgroundColor: Colors.green.shade100,
+                        color: Colors.black,
+                        fontSize: 16),
+                  ))
+            ],
+          ),
         ),
       ],
     );
