@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mediserv/screens/book_doctor.dart';
 import 'package:mediserv/screens/bottom_nav.dart';
 import 'package:mediserv/screens/home_screen.dart';
 import 'package:mediserv/screens/plan_screen.dart';
+import 'package:mediserv/screens/quiz/quiz.dart';
 
 import 'package:mediserv/utils/notification_controller.dart';
 
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
         }
       },
       // home: HomeScreeen(),
-      home: BottomNavig(),
+      home: QuizScreen(),
       //home: PlanScreen(),
     );
   }

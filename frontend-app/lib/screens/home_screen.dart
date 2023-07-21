@@ -23,7 +23,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
     // TODO: implement initState
     super.initState();
 
-    UsageStatistics.getUsage();
+    // UsageStatistics.getUsage();
     NotificationController.initializeContext(context);
     NotificationController.startListeningNotificationEvents();
     NotificationController.requestFirebaseToken();
@@ -34,9 +34,9 @@ class _HomeScreeenState extends State<HomeScreeen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          //  NotificationController.createNewNotification();
+          NotificationController.createNewNotification();
           // await UsageStatistics.getUsage();
-          await UsageStatistics.getMostActiveHours();
+          //await UsageStatistics.getMostActiveHours();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
