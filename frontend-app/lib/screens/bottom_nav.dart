@@ -123,12 +123,19 @@ class _BottomNavigState extends State<BottomNavig> {
                 bottom: 21,
                 left: width / 2 - 52,
                 right: width / 2 - 52,
-                child: Container(
-                  height: 70,
-                  width: 70,
-                  child: Center(child: Image.asset('assets/chatbot.png')),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Color(0xFFA4FFF9)),
+                child: GestureDetector(
+                  onTap: () async {
+                    await showDialog(
+                        context: context,
+                        builder: (context) => ChatbotScreen());
+                  },
+                  child: Container(
+                    height: 70,
+                    width: 70,
+                    child: Center(child: Image.asset('assets/chatbot.png')),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Color(0xFFA4FFF9)),
+                  ),
                 ))
           ],
         ),
