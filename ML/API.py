@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import Optional
 
-
+import random
 import torch
 from transformers import BioGptTokenizer, BioGptForCausalLM, set_seed
 
@@ -132,7 +132,8 @@ def compare(current,past):
     return 0
 
 def Notify(old,new,trait):
-   
+    headline = random.choice(list(model_intro.values()))
+
     try :
         global tokenizer_art, model_art
         inputs = tokenizer_art(userquery, return_tensors="pt")
