@@ -42,7 +42,7 @@ class NotificationController extends ChangeNotifier {
               onlyAlertOnce: true,
               groupAlertBehavior: GroupAlertBehavior.Children,
               importance: NotificationImportance.High,
-              defaultPrivacy: NotificationPrivacy.Private,
+              defaultPrivacy: NotificationPrivacy.Public,
               defaultColor: Colors.deepPurple,
               ledColor: Colors.deepPurple)
         ],
@@ -295,6 +295,7 @@ class NotificationController extends ChangeNotifier {
             //'asset://assets/images/balloons-in-sky.jpg',
             notificationLayout: NotificationLayout.BigPicture,
             payload: {'notificationId': '1234567890'}),
+        //  schedule: NotificationCalendar(hour: 8, minute: 0, repeats: true),
         actionButtons: [
           NotificationActionButton(
               showInCompactView: true,
