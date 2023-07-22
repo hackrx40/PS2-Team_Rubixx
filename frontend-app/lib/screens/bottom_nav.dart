@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:mediserv/screens/book_doctor.dart';
 import 'package:mediserv/screens/chatbot_screen.dart';
 import 'package:mediserv/screens/home_screen.dart';
 import 'package:mediserv/screens/payment.dart';

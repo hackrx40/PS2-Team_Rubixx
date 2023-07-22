@@ -1,8 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-
+const articleRoutes = require("./route/articleRoutes");
+const generateArticle = require("./controllers/generateArticle");
 require("dotenv").config();
+
+app.use(express.json());
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
+});
+
+app.use("/api/articles", articleRoutes);
+app.use("/api/generate", () => {
+  generateArticle;
+  articleRoutes;
+});
 
 mongoose
   .connect(process.env.URI)

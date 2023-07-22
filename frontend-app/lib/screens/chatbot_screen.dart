@@ -49,25 +49,25 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                 child: ListView.builder(
                     itemCount: chats.length,
                     itemBuilder: (context, index) {
-                      return Flexible(
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          color: chats[index].isChatFromBot!
-                              ? Color(0xFFEDEDED)
-                              : Colors.white,
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: AssetImage(
-                                  'assets/chatbot.png',
-                                ),
+                      return Container(
+                        padding: EdgeInsets.all(5),
+                        color: chats[index].isChatFromBot!
+                            ? Color(0xFFEDEDED)
+                            : Colors.white,
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundImage: AssetImage(
+                                chats[index].isChatFromBot!
+                                    ? 'assets/chatbot.png'
+                                    : 'assets/profile_pic.png',
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Expanded(child: Text(chats[index].text))
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(child: Text(chats[index].text))
+                          ],
                         ),
                       );
                     }),
@@ -96,7 +96,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                             ChatBotHelper.askQuestion(_textController.text)
                                 .then((value) {
                               chats.add(ChatbotModel(
-                                  text: value!,
+                                  text: value,
                                   dateTime: DateTime.now(),
                                   isChatFromBot: true));
                               _textController.clear();
