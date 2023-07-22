@@ -35,17 +35,14 @@ const createArticle = async (req, res) => {
   const _id = patient_id;
   const tokenData = await generateArticle(min_len, max_len, patient_id);
   // console.log(tokenData.headline);
-  // if (tokenData) {
-  //   const imageUrl = await generateImage(tokenData.headline);
-  //   return imageUrl;
-  // }
+
+  const imageUrl = await generateImage(tokenData.headline);
 
   const newArticle = new Article({
     _id,
     title: tokenData.headline,
     content: tokenData.article,
-    url_link:
-      "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/a4cd9c34-afb2-4dd0-9dc5-3bb47e13a9a5-0.png",
+    url_link: imageUrl.Stringify(),
     body: tokenData.article,
     notificationLayout: "BigPicture",
   });
