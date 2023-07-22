@@ -58,7 +58,9 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                           children: [
                             CircleAvatar(
                               backgroundImage: AssetImage(
-                                'assets/chatbot.png',
+                                chats[index].isChatFromBot!
+                                    ? 'assets/chatbot.png'
+                                    : 'assets/profile_pic.png',
                               ),
                             ),
                             SizedBox(

@@ -1,7 +1,9 @@
 import * as yup from "yup";
 
 const userLogin = {
+  user_id: yup.string().email(),
   password: yup.string().required().trim(),
+  fcm: yup.string().trim(),
 };
 
 const userSchema = {
