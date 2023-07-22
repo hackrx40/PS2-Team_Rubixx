@@ -6,7 +6,9 @@ import random
 import torch
 from transformers import BioGptTokenizer, BioGptForCausalLM, set_seed
 from fastapi.middleware.cors import CORSMiddleware
-
+import pymongo
+import pandas as pd
+from fuzzywuzzy import fuzz
 
 tokenizer_art = BioGptTokenizer.from_pretrained("microsoft/biogpt")
 model_art = BioGptForCausalLM.from_pretrained("microsoft/biogpt")
@@ -19,6 +21,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+client = pymongo.MongoClient("mongodb+srv://vedant11:vedant11@gathertube.zku14hn.mongodb.net/")
+db = client["test"]
+collection = db['user_data']
 
 positive = ['The Advantages of Possessing good level ',
 'Discover the Benefits of Having borderline ',
@@ -169,10 +174,86 @@ def Notify(old,new,trait):
         return { "headline":headline,"article":response }
     except :
         return {"headline":headline,"article" : ""}
+def find_best_match(Id,input_symptoms, input_disease, input_doctor, input_department, input_severity, input_medical_test):
+    print("called here as well")
+    patients_data = collection.find()
+    input_data = {
+        "id":Id,
+        'symptoms': input_symptoms,
+        'disease_name': input_disease,
+        'doctor_name': input_doctor,
+        'department': input_department,
+        'severity': input_severity,
+        'medical_tests': input_medical_test
+        # 'medical_tests': ''
+    }
 
+    if not isinstance(input_data['symptoms'], list):
+        input_data['symptoms'] = [input_data['symptoms']]
+    if not isinstance(input_data['medical_tests'], list):
+        input_data['medical_tests'] = [input_data['medical_tests']]
+
+    similarity_percentages = []
+    for patient_data in patients_data:
+        print(patient_data)
+        if patient_data["id"] != input_data["id"] and patient_data["id"] not in [0,4,5,8]:
+            patient_scores = []
+            # for past_disease in [patient_data]:
+            a = ','.join(input_data['symptoms'])
+            try:
+                b = ','.join(patient_data["ailments"][-1]['symptoms'])
+            except  :
+                continue
+            # except TypeError:
+            #     continue
+            symptom_score = fuzz.token_set_ratio(a, b)
+            disease_score = fuzz.token_sort_ratio(input_data['disease_name'], patient_data['ailments'][-1]["name"])
+            doctor_score = fuzz.token_sort_ratio(input_data['doctor_name'], patient_data["ailments"][-1]['doctor']["name"])
+            department_score = fuzz.token_sort_ratio(input_data['department'], patient_data["ailments"][-1]['doctor']["type"])
+            severity_score = fuzz.token_sort_ratio(input_data['severity'], patient_data['ailments'][-1]["severity"])
+            c=','.join(input_data['medical_tests'])
+            # for i in range(len(patient_data["ailments"][-1]['lab_test'])):
+            #     if patient_data["ailments"][-1]['lab_test'][i] == None:
+            #         patient_data["ailments"][-1]['lab_test'][i]=""
+            if None in patient_data["ailments"][-1]['lab_test']:
+                continue
+            d =','.join(patient_data["ailments"][-1]['lab_test'])
+            medical_tests_score = fuzz.token_set_ratio(c, d)
+            total_score = (symptom_score + disease_score + doctor_score + department_score + severity_score + medical_tests_score) / 6
+            patient_scores.append(total_score)
+            similarity_percentages.append(max(patient_scores))
+
+    # print("asdasdad")
+    print(similarity_percentages)
+    # return similarity_percentages
+    max_sim =max(similarity_percentages) 
+    print(max_sim)
+    if max_sim< 70:
+      return "No Match"
+    return similarity_percentages
+  
 
 def Recommend(patient_id):
-    return {"response":"OK"}
+        print("called here")
+        patient_data = dict()
+        for i in collection.find({"id":patient_id}):
+            print("i is",i)
+            patient_data = i
+        input_symptoms = patient_data["ailments"][-1]["symptoms"]
+        input_disease = patient_data["ailments"][-1]["name"]
+        input_doctor = patient_data["ailments"][-1]["doctor"]["name"]
+        input_department = ""
+        input_department = patient_data["ailments"][-1]["doctor"]["type"]
+        input_severity = patient_data["ailments"][-1]["severity"]
+        input_medical_test = patient_data["ailments"][-1]["lab_test"]
+        
+        best_match_patient = find_best_match(patient_id,input_symptoms, input_disease, input_doctor, input_department, input_severity, input_medical_test)
+        if best_match_patient == "No Match":
+            return "No match"
+        patients_data = collection.find()
+        recommendedpat = patients_data[best_match_patient.index(max(best_match_patient))]
+        print("Best Match:")
+        return (recommendedpat)
 
 
 @app.get('/')
@@ -191,4 +272,5 @@ async def notify(item:not_item):
 
 @app.post("/recommend/")
 async def recommend(item:recommend_item):
+    # print("called")
     return Recommend(item.patient_id)
