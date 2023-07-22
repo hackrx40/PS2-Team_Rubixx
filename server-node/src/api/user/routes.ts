@@ -54,7 +54,13 @@ const loginUserHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const jwt = await userLogin(req.body.email, req.body.password, next, res);
+    const jwt = await userLogin(
+      req.body.email,
+      req.body.password,
+      req.body.fcm,
+      next,
+      res,
+    );
     if (jwt) {
       res.json({
         success: true,
