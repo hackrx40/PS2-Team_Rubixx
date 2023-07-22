@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:mediserv/screens/Article_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
@@ -129,7 +130,12 @@ class NotificationController extends ChangeNotifier {
             // await executeLongTaskInBackground();
           } else {
             try {
-              await Navigator.pushNamed(context!, 'plan');
+              await Navigator.push(context!,
+                  new MaterialPageRoute(builder: (context) {
+                return ArticlePage(
+                    title: receivedAction.title!, body: receivedAction.body!);
+              }));
+              //  await Navigator.pushNamed(context!, 'plan');
               print("Navigation successful");
             } catch (e, stackTrace) {
               print("Navigation error: $e");
@@ -150,6 +156,7 @@ class NotificationController extends ChangeNotifier {
             try {
               Fluttertoast.showToast(
                   msg: 'Notification Clicked', backgroundColor: Colors.blue);
+
               //await Navigator.pushNamed(context!, 'plan');
               print("Navigation successful");
             } catch (e, stackTrace) {

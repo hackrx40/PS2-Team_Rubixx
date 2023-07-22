@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -35,6 +36,26 @@ class AuthHelper {
     if (data['success'] == true) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('token', data['key']);
+    }
+  }
+
+  static Future<UserModel?> getUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    print(token);
+    var res = await http.get(
+        Uri.parse(
+            'https://11d3-103-68-38-66.ngrok-free.app/api/user/get-details'),
+        headers: {'Authorization': 'Bearer $token'});
+    var data = jsonDecode(res.body);
+    File file = File(
+      'data.txt',
+    );
+    var data1 = data['user'];
+
+    if (data['success'] == true) {
+      UserModel userModel = UserModel.fromMap(data['user']);
+      return userModel;
     }
   }
 }

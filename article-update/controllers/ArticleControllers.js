@@ -2,6 +2,11 @@ const { default: mongoose } = require("mongoose");
 const { findByIdAndDelete, update } = require("../models/Article");
 const Article = require("../models/Article");
 const generateArticle = require("./generateArticle");
+const generateImage = require("./generateImage");
+const axios = require("axios");
+const { send } = require("./sendNotification");
+
+const encodedParams = new URLSearchParams();
 // get all
 const getAllArticle = async (req, res) => {
   try {
@@ -25,22 +30,28 @@ const getArticle = async (req, res) => {
 
 // post
 
-const generateArticle = async (req, res) => {
-  generateArticle();
-};
-
 const createArticle = async (req, res) => {
-  const { _id, title } = req.body;
+  const { min_len, max_len, patient_id } = req.body;
+  const _id = patient_id;
+  const tokenData = await generateArticle(min_len, max_len, patient_id);
+  // console.log(tokenData.headline);
+
+  const imageUrl = await generateImage(tokenData.headline);
+
+  const newArticle = new Article({
+    _id,
+    title: tokenData.headline,
+    content: tokenData.article,
+    url_link: imageUrl.Stringify(),
+    body: tokenData.article,
+    notificationLayout: "BigPicture",
+  });
   try {
-    const Article = await Article.create({
-      _id,
-      title,
-      content,
-      Useful,
-    });
-    res.status(200).json(Article);
+    await newArticle.save();
+    await send(tokenData.headline, tokenData.article);
+    res.status(201).json(newArticle);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(409).json({ error: error.message });
   }
 };
 
@@ -62,7 +73,7 @@ const updateArticle = async (req, res) => {
     { _id: id },
     {
       ...req.body,
-    }
+    },
   );
   if (!updateArticle) {
     res.status(404).json({ message: "no Article " });

@@ -43,20 +43,24 @@ export const register = async (
 };
 
 export const userLogin = async (
-  user_id: string,
+  email: string,
   password: string,
+  fcm: string,
   next: NextFunction,
   res: Response,
 ) => {
   try {
     const databaseResponse = await (await database())
       .collection("users")
-      .findOne({ user_id });
+      .findOne({ email });
 
     if (databaseResponse === null) throw Error("User does not exist");
+    await (await database())
+      .collection("users")
+      .updateOne({ email }, { $set: { fcm } });
     if (!(await compare(password, databaseResponse.password)))
       throw Error("Invalid credentials");
-    return await signJwt({ user_id });
+    return await signJwt({ email });
   } catch (error) {
     next(new errorClass(res, error.message, 501));
     return;
@@ -72,11 +76,11 @@ export const getUser = async (
     const token = req.headers.authorization?.split(" ")[1];
     console.log({ token });
 
-    const { user_id } = await verifyJwt(token!);
+    const { email } = await verifyJwt(token!);
 
     const user = await (await database())
       .collection("users")
-      .findOne({ user_id });
+      .findOne({ email });
     if (user) {
       delete user.password;
     }

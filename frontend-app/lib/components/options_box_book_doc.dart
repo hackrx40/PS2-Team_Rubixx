@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OptionBox extends StatefulWidget {
-  String imageLink;
+  String? imageLink;
   String title1;
   OptionBox({
     Key? key,
-    required this.imageLink,
+    this.imageLink,
     required this.title1,
   }) : super(key: key);
 
