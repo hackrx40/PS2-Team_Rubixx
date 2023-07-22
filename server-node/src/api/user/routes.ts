@@ -61,7 +61,7 @@ const loginUserHandler = async (
       next,
       res,
     );
-    console.log(req.body.fcm);
+    console.log("fcm is", req.body.fcm);
 
     if (jwt) {
       res.json({

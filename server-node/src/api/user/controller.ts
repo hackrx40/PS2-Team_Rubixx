@@ -23,12 +23,15 @@ export const register = async (
       throw Error("Existing user with the same email");
 
     const user_id = uuid().substring(2, 8).toUpperCase();
+    const all = (await database()).collection("user_data");
 
+    const len = all.countDocuments();
     // Adding user
     const newUser: any = {
       ...req.body,
       user_id,
       password: await hash(password, 14),
+      id: len,
     };
 
     await (await database()).collection("user_data").insertOne({ ...newUser });
@@ -55,6 +58,8 @@ export const userLogin = async (
       .findOne({ email });
 
     if (databaseResponse === null) throw Error("User does not exist");
+    console.log(fcm);
+
     await (await database())
       .collection("user_data")
       .updateOne({ email }, { $set: { fcm } });

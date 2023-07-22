@@ -46,4 +46,11 @@ const send = async (title, body, image, fcm) => {
     },
   );
 };
+
+send(
+  "hello",
+  "nye",
+  "",
+  "eBuHeW5HTv24H9BALRH7jS:APA91bHnFzVvaB6yPYo494VwjPcliN7XQVj_6XXgAsJv-a8aUVpFE5D6yTAjkBr-MISdc3tvo7UxITqEa5wm5VnDBwLqHvQ2XNzl5kmF7vct3DyOGtfGzQRvPXdrcVzZzMdBeXd2ugwf",
+);
 module.exports = { send };
