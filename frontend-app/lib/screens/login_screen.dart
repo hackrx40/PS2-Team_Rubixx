@@ -3,8 +3,12 @@ import 'package:mediserv/components/password_input.dart';
 import 'package:mediserv/components/rounded_button_login.dart';
 import 'package:mediserv/components/text_input.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:mediserv/dataProviders/app_data.dart';
+import 'package:mediserv/screens/bottom_nav.dart';
+import 'package:mediserv/screens/home_screen.dart';
 import 'package:mediserv/screens/signup_screen.dart';
 import 'package:mediserv/utils/auth_helper.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController userIdController = TextEditingController();
@@ -67,8 +71,10 @@ class LoginScreen extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
+                              builder: (context) => BottomNavig()),
                           (Route<dynamic> route) => false);
+                      Provider.of<AppData>(context, listen: false)
+                          .login_out(true);
                     },
                   ),
                   SizedBox(

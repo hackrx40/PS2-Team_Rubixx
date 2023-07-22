@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mediserv/screens/login_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../dataProviders/app_data.dart';
 
 class AppBarr extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor = Color(0xFF64CCC5);
@@ -11,6 +16,7 @@ class AppBarr extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<AppData>(context);
     return AppBar(
       leading: Image(image: AssetImage('assets/profile_pic.png')),
       title: Text(
@@ -22,9 +28,17 @@ class AppBarr extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       actions: <Widget>[
         GestureDetector(
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
+          onTap: () async {
+            if (prov.loggedIn) {
+              prov.login_out(false);
+              SharedPreferences sharedPreferences =
+                  await SharedPreferences.getInstance();
+              sharedPreferences.setString('token', '');
+              Fluttertoast.showToast(msg: 'User Logged out!');
+            } else {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()));
+            }
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -37,7 +51,7 @@ class AppBarr extends StatelessWidget implements PreferredSizeWidget {
                     color: Colors.green.shade100,
                   ),
                   child: Text(
-                    'Login/Signup',
+                    prov.loggedIn ? 'Log Out' : 'Login/Signup',
                     style: GoogleFonts.dmSans(
                         backgroundColor: Colors.green.shade100,
                         color: Colors.black,
