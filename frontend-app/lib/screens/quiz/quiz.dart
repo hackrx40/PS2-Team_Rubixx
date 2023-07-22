@@ -14,14 +14,31 @@ class QuizScreen extends StatefulWidget {
 }
 
 List<Question> questions = <Question>[
+ Question(
+      question: 'Which hormone is primarily responsible for regulating blood sugar levels in the body?',
+      answers: ['Insulin', 'Glucagon', 'Thyroxine', 'Cortisol'],
+      correctAnswer: 'Insulin'),
   Question(
-      question: 'Which of the following cannot be polarised?',
-      answers: ['Radiowaves', 'Transverse waves', 'Sound waves', 'X-Rays'],
-      correctAnswer: 'Radiowaves'),
+      question: 'What type of diabetes is typically diagnosed in childhood or adolescence?',
+      answers: ['Type 1 diabetes', ' Type 2 diabetes', 'Gestational diabetes', 'Prediabetes'],
+      correctAnswer: 'Type 1 diabetes'),
   Question(
-      question: 'Which of the  cannot be polarised?',
-      answers: ['Radiowaves', 'Transverse waves', 'Sound waves', 'X-Rays'],
-      correctAnswer: 'Radiowaves')
+      question: 'The long-term complications of diabetes include all of the following, except:',
+      answers: ['Cardiovascular disease', 'Nephropathy (kidney damage)', 'Osteoporosis', 'Diabetic retinopathy (eye damage)'],
+      correctAnswer: 'Osteoporosis'), 
+
+  Question(
+      question: 'Postpartum depression occurs:',
+      answers: ['During pregnancy', ' After childbirth', 'In women only', 'Only in women who have a history of depression'],
+      correctAnswer: ' After childbirth'),
+  Question(
+      question: 'Which lifestyle factor is often associated with a reduced risk of depression?',
+      answers: ['Regular exercise', 'Excessive alcohol consumption', ' Irregular sleep patterns', ' High-sugar diet'],
+      correctAnswer: 'Regular exercise'),
+  Question(
+      question: 'Which of the following is NOT a symptom of major depressive disorder?',
+      answers: ['Fatigue or loss of energy', 'Insomnia or hypersomnia', 'Grandiose delusions', 'Difficulty concentrating or making decisions'],
+      correctAnswer: 'Grandiose delusions'),
 ];
 
 class _QuizScreenState extends State<QuizScreen> {

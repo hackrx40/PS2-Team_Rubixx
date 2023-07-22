@@ -11,9 +11,17 @@ Official Entry of Team Rubixx team to HackRx 4.0 <br>
 ![image](https://github.com/hackrx40/PS2-Team_Rubixx/assets/75165587/ae4f870b-85a6-4f1d-894c-9bcbbf2486a6)
 - [Official Website](https://hackrx.in/)
 
-## Problem Statement 🚧
-
-## About our project 💥
+## Problem Statement 🚧 
+Generative AI | HealthGenie
+Develop a visionary solution that harnesses the
+cutting-edge potential of generative AI to create captivating
+content for notifications and build personalized pages for
+mobile or web application. At Bajaj, we cherish fresh
+perspectives and eagerly await your out-of-the-box ideas. By
+tapping into a wealth of health data stored in a centralized
+repository (health-mart), your solution will empower users
+with timely, relevant, and personalized information, driving
+their engagement and inspiring positive health behaviors.
 
 ## Collaborators 🤖
 Only developers.

@@ -7,7 +7,7 @@ const ArticleSchema = new schema(
   {
     _id: {
       type: String,
-      default: shortid.generate,
+      required: true,
     },
     title: {
       type: String,
@@ -17,8 +17,16 @@ const ArticleSchema = new schema(
       type: String,
       required: true,
     },
-    useful: {
-      type: Boolean,
+    url_link: {
+      type: String,
+      required: true,
+    },
+    body: {
+      type: String,
+      required: true,
+    },
+    notificationLayout: {
+      type: String,
       required: true,
     },
   },
