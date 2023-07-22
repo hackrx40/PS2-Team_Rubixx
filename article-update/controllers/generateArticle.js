@@ -1,18 +1,20 @@
 const axios = require("axios");
-
-const generateArticle = async () => {
+const a = ["prevention", "cause", "cure", "facts"];
+const b = ["diabetes", "obesity", "cancer", "heart disease"];
+const c = ["woman", "man"];
+const generateArticle = async (minlen, maxlen, pid) => {
   try {
-    const responses = await axios.post("http://13.90.231.82:80/medibot/", {
-      body: {
-        query: "I have a headache",
-      },
+    const responses = await axios.post("http://13.90.231.82/notification/", {
+      min_len: minlen,
+      max_len: maxlen,
+      patient_id: pid,
     });
-
-    const { data } = responses;
-    console.log(data);
+    console.log(responses.data);
+    return responses.data;
   } catch (error) {
     console.log(error);
   }
 };
+generateArticle(10, 2000, 26);
 
 module.exports = generateArticle;

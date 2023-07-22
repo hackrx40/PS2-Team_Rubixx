@@ -1,40 +1,30 @@
 const express = require("express");
 const routers = express.Router();
-
+const {
+  getAllArticle,
+  getArticle,
+  createArticle,
+  deleteArticle,
+  updateArticle,
+} = require("../controllers/ArticleControllers");
 routers.get("/", (req, res) => {
-  res.json({
-    message: "Get all article",
-  });
+  getAllArticle();
 });
 
 routers.get("/:id", (req, res) => {
-  res.json({
-    message: "Get single article",
-  });
+  getArticle();
 });
 
 routers.post("/", (req, res) => {
-  res.json({
-    message: "Post a article",
-  });
+  createArticle(req, res);
 });
 
 routers.delete("/:id", (req, res) => {
-  res.json({
-    message: "delete a article",
-  });
+  deleteArticle(req, res);
 });
 
 routers.patch("/:id", (req, res) => {
-  res.json({
-    message: "update a article",
-  });
-});
-
-routers.get("/generate", (req, res) => {
-  res.json({
-    message: "generate a article",
-  });
+  updateArticle(req, res);
 });
 
 module.exports = routers;
