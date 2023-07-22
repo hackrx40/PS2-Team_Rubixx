@@ -14,14 +14,12 @@ async function getUserDetails(jwt) {
 function App() {
   const [options, setOptions] = useState();
   const [series, setSeries] = useState();
+  const searchParams = new URLSearchParams(document.location.search);
   useEffect(() => {
     console.log("here");
     (async () => {
-      const ailments = (
-        await getUserDetails(
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1iYXJ0b2xvbWVhenppMUBuYXRpb25hbGdlb2dyYXBoaWMuY29tIiwiaWF0IjoxNjg5OTgzMzY3fQ.a_Lp4u_OhoNzv6Rc3yVQW2yUHnLxipW_sInsWPKYRwk",
-        )
-      ).user.ailments;
+      const ailments = (await getUserDetails(searchParams.get("jwt"))).user
+        .ailments;
       const options = {
         chart: {
           id: "basic-bar",
