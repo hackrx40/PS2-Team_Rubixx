@@ -1,8 +1,12 @@
-const send = async (title, body) => {
-  const res = await fetch("https://fcm.googleapis.com/fcm/send", {
-    method: "POST",
-    body: {
-      to: "d5ytrZSORZ-oz_UhgtRXDc:APA91bFpWdn-amHeaqJ_IOnpKZACe1IJcIKMBCSHmh1_vMJSsFmPxD2lzSFG_ULfD0XrbBh7-HE9B_TuifHohYTObEO8PXy9DE4f64-GI9t_fzd-nlEkgFCz_bCmyf6_w9t21w5lXeRV",
+const axios = require("axios");
+
+const send = async (title, body, image, fcm) => {
+  const res = axios.post(
+    "https://fcm.googleapis.com/fcm/send",
+    {
+      token:
+        "AAAAZY1QiFY:APA91bEkjfNw6ueaF5VgoiI185odnwcoPr0t4rGUOpMHj7pGcjdwhpHCJpyuTHKS3I5cX-LdaFeRanqEsPeDAHRRvVCBf8SUFcg2pgNSXLomiB7JHYgyVkrlY7DAws5tqReK-gPqZF6m",
+      to: fcm,
       priority: "high",
       mutable_content: true,
       notification: {
@@ -17,7 +21,7 @@ const send = async (title, body) => {
           channelKey: "alerts",
           displayOnForeground: true,
           notificationLayout: "BigPicture",
-          bigPicture: "https://www.dw.com/image/49519617_303.jpg",
+          // bigPicture: image,
           showWhen: true,
           autoDismissible: true,
           privacy: "Public",
@@ -32,41 +36,14 @@ const send = async (title, body) => {
             autoDismissible: true,
           },
         ],
-        Android: {
-          content: {
-            title: "Android! The eagle has landed!",
-            payload: {
-              android: "android custom content!",
-            },
-          },
-        },
-        iOS: {
-          content: {
-            title: "Jobs! The eagle has landed!",
-            payload: {
-              ios: "ios custom content!",
-            },
-          },
-          actionButtons: [
-            {
-              key: "REDIRECT",
-              label: "Redirect message",
-              autoDismissible: true,
-            },
-            {
-              key: "DISMISS",
-              label: "Dismiss message",
-              actionType: "DismissAction",
-              isDangerousOption: true,
-              autoDismissible: true,
-            },
-          ],
-        },
       },
     },
-  });
-
-  const data = await res.json();
-  return data;
+    {
+      headers: {
+        Authorization:
+          "key=AAAAZY1QiFY:APA91bEkjfNw6ueaF5VgoiI185odnwcoPr0t4rGUOpMHj7pGcjdwhpHCJpyuTHKS3I5cX-LdaFeRanqEsPeDAHRRvVCBf8SUFcg2pgNSXLomiB7JHYgyVkrlY7DAws5tqReK-gPqZF6m",
+      },
+    },
+  );
 };
 module.exports = { send };

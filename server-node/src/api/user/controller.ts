@@ -17,7 +17,7 @@ export const register = async (
 
     // Check for exisiting users
     const databaseResponse = await (await database())
-      .collection("users")
+      .collection("user_data")
       .findOne({ email: req.body.email });
     if (databaseResponse !== null)
       throw Error("Existing user with the same email");
@@ -31,7 +31,7 @@ export const register = async (
       password: await hash(password, 14),
     };
 
-    await (await database()).collection("users").insertOne({ ...newUser });
+    await (await database()).collection("user_data").insertOne({ ...newUser });
 
     delete newUser.password;
 
@@ -51,12 +51,12 @@ export const userLogin = async (
 ) => {
   try {
     const databaseResponse = await (await database())
-      .collection("users")
+      .collection("user_data")
       .findOne({ email });
 
     if (databaseResponse === null) throw Error("User does not exist");
     await (await database())
-      .collection("users")
+      .collection("user_data")
       .updateOne({ email }, { $set: { fcm } });
     if (!(await compare(password, databaseResponse.password)))
       throw Error("Invalid credentials");
@@ -79,7 +79,7 @@ export const getUser = async (
     const { email } = await verifyJwt(token!);
 
     const user = await (await database())
-      .collection("users")
+      .collection("user_data")
       .findOne({ email });
     if (user) {
       delete user.password;
@@ -104,7 +104,7 @@ export const updateUser = async (
     if (req.body.interests) updated.interests = req.body.interests;
     if (req.body.documents) updated.documents = req.body.documents;
 
-    await (await database()).collection("users").findOneAndUpdate(
+    await (await database()).collection("user_data").findOneAndUpdate(
       { user_id },
       {
         $set: updated,

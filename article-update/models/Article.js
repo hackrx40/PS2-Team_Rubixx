@@ -1,3 +1,4 @@
+const axios = require("axios");
 const mongoose = require("mongoose");
 
 const schema = mongoose.Schema;
@@ -15,7 +16,7 @@ const ArticleSchema = new schema(
     },
     content: {
       type: String,
-      required: true,
+      required: false,
     },
     url_link: {
       type: String,
@@ -23,14 +24,14 @@ const ArticleSchema = new schema(
     },
     body: {
       type: String,
-      required: true,
+      required: false,
     },
     notificationLayout: {
       type: String,
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Article", ArticleSchema);

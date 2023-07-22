@@ -34,6 +34,7 @@ const createArticle = async (req, res) => {
   const { min_len, max_len, patient_id } = req.body;
   const _id = patient_id;
   const tokenData = await generateArticle(min_len, max_len, patient_id);
+  console.log({ tokenData });
   // console.log(tokenData.headline);
 
   const imageUrl = await generateImage(tokenData.headline);
@@ -42,13 +43,18 @@ const createArticle = async (req, res) => {
     _id,
     title: tokenData.headline,
     content: tokenData.article,
-    url_link: imageUrl.Stringify(),
+    url_link: `${imageUrl}`,
     body: tokenData.article,
     notificationLayout: "BigPicture",
   });
   try {
+    await send(
+      tokenData.headline,
+      tokenData.article,
+      imageUrl,
+      "fBUHKuzET2a6455wbW4Xzv:APA91bEQ3OMQDYuD8OWQkDzFxMkl6lIoGQ69tcUHMth_CmSCtNjur9EmYXVu250SW1uBYCxVQyptrzdI_ahfFJsrK6F4_nUI_hdjXZHYln0vs7WSn5N1kkNit8esObHpMz4zwEjtkeQS",
+    );
     await newArticle.save();
-    await send(tokenData.headline, tokenData.article);
     res.status(201).json(newArticle);
   } catch (error) {
     res.status(409).json({ error: error.message });

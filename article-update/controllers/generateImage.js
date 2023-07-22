@@ -6,7 +6,7 @@ const generateImage = async (prompt) => {
     "https://stablediffusionapi.com/api/v3/text2img",
     {
       key: "FafNvFptRs8TgidFUqlrNwfWyN6Km46MgK0UzLtyjoACfO0b2GFrc0TXU06S",
-      prompt: `ultra realistic close up portrait ${prompt}`,
+      prompt: `ultra realistic portrait of patient of ${prompt}`,
       negative_prompt: null,
       width: "904",
       height: "512",
@@ -23,7 +23,7 @@ const generateImage = async (prompt) => {
       embeddings_model: null,
       webhook: null,
       track_id: null,
-    }
+    },
   );
   console.log(response.data.output[0]);
   return response.data.output[0];

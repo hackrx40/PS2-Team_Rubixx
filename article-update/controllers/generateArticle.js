@@ -4,7 +4,7 @@ const b = ["diabetes", "obesity", "cancer", "heart disease"];
 const c = ["woman", "man"];
 const generateArticle = async (minlen, maxlen, pid) => {
   try {
-    const responses = await axios.post("http://13.90.231.82/notification/", {
+    const responses = await axios.post("http://13.90.231.82/article/", {
       min_len: minlen,
       max_len: maxlen,
       patient_id: pid,
