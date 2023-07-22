@@ -15,6 +15,5 @@ const generateArticle = async (minlen, maxlen, pid) => {
     console.log(error);
   }
 };
-generateArticle(10, 2000, 26);
 
 module.exports = generateArticle;

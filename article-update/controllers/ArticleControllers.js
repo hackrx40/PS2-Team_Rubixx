@@ -4,6 +4,7 @@ const Article = require("../models/Article");
 const generateArticle = require("./generateArticle");
 const generateImage = require("./generateImage");
 const axios = require("axios");
+const { send } = require("./sendNotification");
 
 const encodedParams = new URLSearchParams();
 // get all
@@ -50,6 +51,7 @@ const createArticle = async (req, res) => {
   });
   try {
     await newArticle.save();
+    await send(tokenData.headline, tokenData.article);
     res.status(201).json(newArticle);
   } catch (error) {
     res.status(409).json({ error: error.message });
@@ -74,7 +76,7 @@ const updateArticle = async (req, res) => {
     { _id: id },
     {
       ...req.body,
-    }
+    },
   );
   if (!updateArticle) {
     res.status(404).json({ message: "no Article " });
