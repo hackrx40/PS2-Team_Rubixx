@@ -27,13 +27,8 @@ void init(BuildContext context) async {
     Provider.of<AppData>(context, listen: false).setUser(userModel!);
   }
 
-  Future.delayed(
-      Duration(
-        seconds: 3,
-      ), () {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BottomNavig()));
-  });
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => BottomNavig()));
 }
 
 class _SplashScreenState extends State<SplashScreen>

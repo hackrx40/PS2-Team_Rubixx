@@ -33,7 +33,10 @@ class _DocCardState extends State<DocCard> {
                 Column(
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage(widget.imageLink),
+                      backgroundImage: NetworkImage(
+                          // 'https://www.woolha.com/media/2020/03/eevee.png'
+                          widget.imageLink),
+                      radius: 35.5,
                     ),
                     Row(
                       children: [

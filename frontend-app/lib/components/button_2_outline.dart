@@ -21,7 +21,7 @@ class _ButtonOutlineState extends State<ButtonOutline> {
       child: Container(
         margin: EdgeInsets.only(left: 7, top: 4),
         height: 30,
-        width: 120,
+        width: 100,
         decoration: BoxDecoration(
             // color: Color(0xff2BB9A9),
             border: Border.all(color: Color(0xff38D0BF)),

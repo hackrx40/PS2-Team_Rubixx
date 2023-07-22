@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -47,8 +48,13 @@ class AuthHelper {
             'https://11d3-103-68-38-66.ngrok-free.app/api/user/get-details'),
         headers: {'Authorization': 'Bearer $token'});
     var data = jsonDecode(res.body);
+    File file = File(
+      'data.txt',
+    );
+    var data1 = data['user'];
+
     if (data['success'] == true) {
-      UserModel userModel = UserModel.fromMap(data);
+      UserModel userModel = UserModel.fromMap(data['user']);
       return userModel;
     }
   }

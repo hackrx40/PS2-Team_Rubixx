@@ -44,10 +44,10 @@ class _BookDoctorState extends State<BookDoctor> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  OptionBox(imageLink: "", title1: "Orthopedic"),
-                  OptionBox(imageLink: "", title1: "Dentist"),
-                  OptionBox(imageLink: "", title1: "Paediatrician"),
-                  OptionBox(imageLink: "", title1: "Paediatrician"),
+                  OptionBox(title1: "Orthopedic"),
+                  OptionBox(title1: "Dentist"),
+                  OptionBox(title1: "Paediatrician"),
+                  OptionBox(title1: "Paediatrician"),
                 ],
               ),
             ),
@@ -66,7 +66,7 @@ class _BookDoctorState extends State<BookDoctor> {
               imageLink: "",
               title1: "Dr. K Meheta",
               starNo: "5",
-              subTitle: "Dr K Meheta is experienced doctor with 200",
+              subTitle: "Dr K Meheta is experienced doctor",
             ),
           ],
         ),

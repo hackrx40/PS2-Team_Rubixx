@@ -8,7 +8,9 @@ import 'package:mediserv/components/bottom_home_page.dart';
 import 'package:mediserv/components/heading_subheading.dart';
 import 'package:mediserv/components/homepage_smalbox.dart';
 import 'package:mediserv/components/search_bar.dart';
+import 'package:mediserv/main.dart';
 import 'package:mediserv/model/snall_box.dart';
+import 'package:mediserv/screens/book_doctor.dart';
 import 'package:mediserv/screens/chatbot_screen.dart';
 import 'package:mediserv/utils/notif_content.dart';
 import 'package:mediserv/utils/notification_controller.dart';
@@ -90,36 +92,45 @@ class _HomeScreeenState extends State<HomeScreeen> {
     NotificationController.requestFirebaseToken();
   }
 
-  List<SmallBox> widgets = [
-    SmallBox(
-        title: "Consult a doctor", image: "assets/hp_doc.png", pressed: () {}),
-    SmallBox(
-        title: "Find a Hospital",
-        image: "assets/hp_hospital_building.png",
-        pressed: () {}),
-    SmallBox(
-        title: "Lab Tests",
-        image: "assets/hp_chemical_analysis.png",
-        pressed: () {}),
-    SmallBox(title: "Buy a plan", image: "assets/hp_task.png", pressed: () {}),
-  ];
-
-  List<SmallBox> widgets1 = [
-    SmallBox(
-        title: "Lab Tests",
-        image: "assets/hp_chemical_analysis.png",
-        pressed: () {}),
-    SmallBox(
-        title: "Find a Hospital",
-        image: "assets/hp_hospital_building.png",
-        pressed: () {}),
-    SmallBox(
-        title: "Consult a doctor", image: "assets/hp_doc.png", pressed: () {}),
-    SmallBox(title: "Buy a plan", image: "assets/hp_task.png", pressed: () {}),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    List<SmallBox> widgets = [
+      SmallBox(
+          title: "Consult a doctor",
+          image: "assets/hp_doc.png",
+          pressed: () async {
+            // await Navigator.push(
+            //     context, MaterialPageRoute(builder: (context) => BookDoctor()));
+          }),
+      SmallBox(
+          title: "Find a Hospital",
+          image: "assets/hp_hospital_building.png",
+          pressed: () {}),
+      SmallBox(
+          title: "Lab Tests",
+          image: "assets/hp_chemical_analysis.png",
+          pressed: () {}),
+      SmallBox(
+          title: "Buy a plan", image: "assets/hp_task.png", pressed: () {}),
+    ];
+
+    List<SmallBox> widgets1 = [
+      SmallBox(
+          title: "Lab Tests",
+          image: "assets/hp_chemical_analysis.png",
+          pressed: () {}),
+      SmallBox(
+          title: "Find a Hospital",
+          image: "assets/hp_hospital_building.png",
+          pressed: () {}),
+      SmallBox(
+          title: "Consult a doctor",
+          image: "assets/hp_doc.png",
+          pressed: () {}),
+      SmallBox(
+          title: "Buy a plan", image: "assets/hp_task.png", pressed: () {}),
+    ];
+
     loadData();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -156,48 +167,57 @@ class _HomeScreeenState extends State<HomeScreeen> {
                       itemCount: widgets.length,
                       itemBuilder: (context, index) {
                         double screenWidth = MediaQuery.of(context).size.width;
-                        return Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Baseline(
-                            baselineType: TextBaseline.alphabetic,
-                            baseline: 90,
-                            child: Center(
-                              child: Container(
-                                width: 80,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Center(
-                                      child: Container(
-                                        height: 75.0,
-                                        width: 80,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage(defaultLayout
-                                                ? widgets[index].image
-                                                : widgets1[index].image),
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BookDoctor()));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Baseline(
+                              baselineType: TextBaseline.alphabetic,
+                              baseline: 90,
+                              child: Center(
+                                child: Container(
+                                  width: 80,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Container(
+                                          height: 75.0,
+                                          width: 80,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(defaultLayout
+                                                  ? widgets[index].image
+                                                  : widgets1[index].image),
+                                            ),
+                                            color: Color(0xffAAE7E7),
+                                            border: Border.all(
+                                                width: 1.2,
+                                                color: Color(0xff38D0BF)),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
-                                          color: Color(0xffAAE7E7),
-                                          border: Border.all(
-                                              width: 1.2,
-                                              color: Color(0xff38D0BF)),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      defaultLayout
-                                          ? widgets[index].title
-                                          : widgets1[index].title,
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.dmSans(fontSize: 12),
-                                    ),
-                                  ],
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        defaultLayout
+                                            ? widgets[index].title
+                                            : widgets1[index].title,
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.dmSans(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

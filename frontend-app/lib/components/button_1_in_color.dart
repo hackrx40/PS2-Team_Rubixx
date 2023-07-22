@@ -21,7 +21,7 @@ class _ButtonInColorState extends State<ButtonInColor> {
       child: Container(
         margin: EdgeInsets.only(left: 7, top: 4),
         height: 30,
-        width: 120,
+        width: 100,
         decoration: BoxDecoration(
             color: Color(0xff2BB9A9),
             // border: Border.all(color: Color(0xff38D0BF)),
@@ -29,7 +29,7 @@ class _ButtonInColorState extends State<ButtonInColor> {
         child: Center(
           child: Text(
             widget.title1,
-            style: GoogleFonts.dmSans(fontSize: 12, color: Colors.white),
+            style: GoogleFonts.dmSans(fontSize: 10, color: Colors.white),
           ),
         ),
       ),
